@@ -60,7 +60,7 @@ ________________________________________________
       sum(-2*x*delta_average + 2*delta_average*old_average + delta_average^2)
 ```
 
-Next we can factor everything but `x` out of the sum:
+Next we can factor everything but `x` out of the sum by multiplying it by the `old_length`:
 
 ```
 delta_square_sum = sum(-2*x*delta_average + 2*delta_average*old_average + delta_average^2);
