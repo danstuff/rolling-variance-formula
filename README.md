@@ -60,14 +60,16 @@ ________________________________________________
       sum(-2*x*delta_average + 2*delta_average*old_average + delta_average^2)
 ```
 
-Next we can factor everything but `x` out of the sum by multiplying it by the `old_length`:
+Next we can factor everything but `x` out of the sum by multiplying it by `old_length`. 
 
 ```
 delta_square_sum = sum(-2*x*delta_average + 2*delta_average*old_average + delta_average^2);
                  = -2*delta_average*sum(x) + 2*delta_average*old_average*old_length + delta_average^2*old_length;
 ```
 
- And since `sum(x) = old_average * old_length`, we can substitute that as well:
+Because we are multiplying by `old_length`, we will have to account for the new variance datapoint by adding it back in later.
+
+Since we are not yet accounting for the new datapoint, `sum(x) = old_average * old_length`, so we can substitute that in as well:
 
 ```
 delta_square_sum = -2*delta_average*old_average*old_length + 2*delta_average*old_average*old_length + delta_average^2*old_length;
@@ -75,7 +77,9 @@ delta_square_sum = -2*delta_average*old_average*old_length + 2*delta_average*old
                  = (new_average - old_average)^2 * old_length;
 ```
 
-Now that we have a simplified `delta_square_sum`, we can add it to `old_square_sum` plus our new variance datapoint `(x - new_average)^2` to get `new_square_sum`. Thus, a rolling sum of squares calculation can be performed like so:
+Now that we have a simplified `delta_square_sum`, we can add it to `old_square_sum` plus our new variance datapoint `(x - new_average)^2` to get `new_square_sum`.
+
+Thus, a rolling sum of squares calculation can be performed like so:
 
 ```
 new_square_sum = old_square_sum + old_length*(new_average - old_average)^2 + (x - new_average)^2;
